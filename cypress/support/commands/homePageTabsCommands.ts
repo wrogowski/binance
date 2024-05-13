@@ -12,23 +12,23 @@ export const openTab = (tabName: TabName) => {
 };
 
 export const checkPositionDetails = (currencyPair: string, expectedSize: string) => {
-  homePage.tab('Positions').positionCurrencyPair().should('have.text', currencyPair);
-  homePage.tab('Positions').sizeColumn().should('have.text', `${expectedSize} BTC`);
+  homePage.tab('Positions').positionCurrencyPair.should('have.text', currencyPair);
+  homePage.tab('Positions').sizeColumn.should('have.text', `${expectedSize} BTC`);
 };
 
 export const clearAllPositions = () => {
   const tab = homePage.tab('Positions');
 
-  tab.closeAllPositionsButton().click();
+  tab.closeAllPositionsButton.click();
   cy.manageDialog('confirm')
 
-  tab.positionRow().should('not.exist');
+  tab.positionRow.should('not.exist');
 };
 
 export const checkTabHeaderCounterValue = (tabName: TabName, exptectedValue: number) => {
   const tab = homePage.tab(tabName);
 
-  tab.headerCounter().then(headerValue =>
+  tab.headerCounter.then(headerValue =>
     expect(headerValue).eq(exptectedValue.toString())
   );
 }

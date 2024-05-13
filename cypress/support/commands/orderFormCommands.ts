@@ -1,8 +1,6 @@
 import { OrderForm, OrderFormTabs } from "../../pages/components/orderForm";
-import { Dialogs } from "../../pages/components/dialogs";
 
 const orderForm = new OrderForm();
-const dialog = new Dialogs();
 
 export const openOrderFormTab = (tabName: OrderFormTabs) =>
   orderForm.tabs(tabName).click().then(() =>

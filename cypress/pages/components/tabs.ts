@@ -5,36 +5,51 @@ export const tabNames: TabName[] = ['Positions', 'Open Orders', 'Order History',
   'Transaction History', 'Position History', 'API Key', 'Strategy', 'Assets'];
 
 export class Tabs {
-  // I need to figure out how to fix TS error, when a correct Cypress.Chainer type is provided below
   private tabName: TabName;
-  get tabHeader(): Cypress.Chainable<JQuery<HTMLElement>> { return this.convertNameToTestId(this.tabName).then(convertedName => cy.getByTestId(convertedName)) };
-  headerCounter: any;
-  content: any;
-  logInLink: any;
-  registerNowLink: any;
+
+  get tabHeader(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return this.convertNameToTestId(this.tabName).then(convertedName =>
+      cy.getByTestId(convertedName));
+  };
+
+  get headerCounter(): Cypress.Chainable<string> {
+    return this.tabHeader.invoke('text').then(text => text.match(/\d+/g)[0]);
+  };
+
+  get content(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get(`div#${this.tabName.toUpperCase().replace(' ', '_')}`);
+  };
+
+  get logInLink(): Cypress.Chainable<JQuery<HTMLAnchorElement>> {
+    return cy.contains('a', 'Log In');
+  };
+
+  get registerNowLink(): Cypress.Chainable<JQuery<HTMLAnchorElement>> {
+    return cy.contains('a', 'Register Now');
+  };
 
   //Positions Tab locators
-  positionRow: any;
-  positionCurrencyPair: any;
-  sizeColumn: any;
-  closeAllPositionsButton: any;
+  get positionRow(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get('div.position-row.body');
+  };
+
+  get positionCurrencyPair(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get('div.pair');
+  };
+
+  get sizeColumn(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get('div.size-buy');
+  };
+
+  get closeAllPositionsButton(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.contains('button', 'Close All Positions');
+  };
 
   //Position History Tab locators
-  get positionHistoryDataRows(): Cypress.Chainable<JQuery<HTMLElement>> { return this.content().find('svg').first().parent()}
+  get positionHistoryDataRows(): Cypress.Chainable<JQuery<HTMLElement>> { return this.content.find('svg').first().parent() }
 
   constructor(tabName: TabName) {
     this.tabName = tabName;
-    // this.tabHeader = () => this.convertNameToTestId(tabName).then(convertedName => cy.getByTestId(convertedName));
-    this.headerCounter = () => this.tabHeader().invoke('text').then(text => text.match(/\d+/g)[0]);
-    this.content = () => cy.get(`div#${tabName.toUpperCase().replace(' ', '_')}`);
-    this.logInLink = () => cy.contains('a', 'Log In');
-    this.registerNowLink = () => cy.contains('a', 'Register Now');
-
-    //Positions Tab locators
-    this.positionRow = () => cy.get('div.position-row.body');
-    this.positionCurrencyPair = () => cy.get('div.pair');
-    this.sizeColumn = () => cy.get('div.size-buy');
-    this.closeAllPositionsButton = () => cy.contains('button', 'Close All Positions');
   };
 
   private convertNameToTestId = (tabName: TabName) => {

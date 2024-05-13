@@ -27,23 +27,23 @@ describe('BTC market operations and positions validation', () => {
     }).then(() => {
       openTab('Positions');
 
-      currentTab.positionRow().should('have.length', '1');
+      currentTab.positionRow.should('have.length', '1');
       checkPositionDetails('BTCUSDT', '0.055');
       checkTabHeaderCounterValue('Positions', 1);
     }).then(() => {
       placeOrder('buy', 0.005);
 
-      currentTab.positionRow().should('have.length', '1');
+      currentTab.positionRow.should('have.length', '1');
       checkPositionDetails('BTCUSDT', '0.060');
       checkTabHeaderCounterValue('Positions', 1);
 
     }).then(() => {
       clearAllPositions();
-      currentTab.positionRow().should('not.exist');
+      currentTab.positionRow.should('not.exist');
       checkTabHeaderCounterValue('Positions', 0);
     }).then(() => {
       openTab('Position History');
-      
+
     });
   });
 });

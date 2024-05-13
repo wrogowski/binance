@@ -48,12 +48,12 @@ describe('When visiting the home page as not logged in user', () => {
     tabNames.forEach(tabName => {
       const currentTab = openTab(tabName);
 
-      currentTab.content().within(() => {
-        currentTab.logInLink()
+      currentTab.content.within(() => {
+        currentTab.logInLink
           .should('be.visible')
           .and('have.attr', 'href')
           .then(href => expect(href).to.include(`en${loginPage.path}?`));
-        currentTab.registerNowLink()
+        currentTab.registerNowLink
           .should('be.visible')
           .and('have.attr', 'href')
           .then(href => expect(href).to.include(`en${registerPage.path}?`));
