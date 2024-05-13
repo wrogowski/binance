@@ -1,0 +1,19 @@
+{
+  "name": "interview-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:ui": "cypress open --e2e --browser chrome",
+    "cy:headless": "cypress run --browser chrome"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "cypress": "^13.8.1",
+    "cypress-plugin-tab": "^1.0.5",
+    "typescript": "^5.4.5"
+  }
+}
