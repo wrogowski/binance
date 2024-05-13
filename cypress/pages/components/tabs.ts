@@ -5,6 +5,10 @@ export const tabNames: TabName[] = ['Positions', 'Open Orders', 'Order History',
   'Transaction History', 'Position History', 'API Key', 'Strategy', 'Assets'];
 
 export class Tabs {
+  constructor(tabName: TabName) {
+    this.tabName = tabName;
+  };
+
   private tabName: TabName;
 
   get tabHeader(): Cypress.Chainable<JQuery<HTMLElement>> {
@@ -45,11 +49,9 @@ export class Tabs {
     return cy.contains('button', 'Close All Positions');
   };
 
-  //Position History Tab locators
-  get positionHistoryDataRows(): Cypress.Chainable<JQuery<HTMLElement>> { return this.content.find('svg').first().parent() }
-
-  constructor(tabName: TabName) {
-    this.tabName = tabName;
+  //Order History Tab locators
+  get orderHistoryDataRows(): Cypress.Chainable<JQuery<HTMLElement>> {
+    return cy.get('div[title="BTCUSDT Perpetual"]').parent('div[class^="css-"]');
   };
 
   private convertNameToTestId = (tabName: TabName) => {

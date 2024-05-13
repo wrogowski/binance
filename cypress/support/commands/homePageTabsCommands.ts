@@ -1,5 +1,13 @@
 import { TabName } from "../../pages/components/tabs";
 import { HomePage } from "../../pages/homePage";
+import { OrderFormTabs } from "../../pages/components/orderForm";
+
+export interface OrderHistoryRowData {
+  symbol: string,
+  type: OrderFormTabs,
+  side: 'Buy' | 'Sell',
+  amount: string
+}
 
 const homePage = new HomePage();
 
@@ -31,4 +39,14 @@ export const checkTabHeaderCounterValue = (tabName: TabName, exptectedValue: num
   tab.headerCounter.then(headerValue =>
     expect(headerValue).eq(exptectedValue.toString())
   );
-}
+};
+
+export const checkOrderHistoryRowsData = (expectedRowsData: OrderHistoryRowData[]) => {
+  homePage.tab('Order History').orderHistoryDataRows.then(tabRows => {
+    expectedRowsData.forEach((rowData: OrderHistoryRowData, i: number) => {
+      Object.values(rowData).forEach(value =>
+        cy.wrap(tabRows[i]).find(`div[title="${value}"]`).should('exist').debug
+      );
+    });
+  });
+};

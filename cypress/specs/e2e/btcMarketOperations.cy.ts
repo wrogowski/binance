@@ -6,7 +6,9 @@ import {
   openTab,
   checkPositionDetails,
   clearAllPositions,
-  checkTabHeaderCounterValue
+  checkTabHeaderCounterValue,
+  checkOrderHistoryRowsData,
+  OrderHistoryRowData
 } from "../../support/commands/homePageTabsCommands";
 
 
@@ -42,8 +44,14 @@ describe('BTC market operations and positions validation', () => {
       currentTab.positionRow.should('not.exist');
       checkTabHeaderCounterValue('Positions', 0);
     }).then(() => {
-      openTab('Position History');
+      const expectedOrders: OrderHistoryRowData[] = [
+        {symbol: 'BTCUSDT Perpetual', type: 'Market', side: 'Sell', amount: '0.060 BTC'},
+        {symbol: 'BTCUSDT Perpetual', type: 'Market', side: 'Buy', amount: '0.005 BTC'},
+        {symbol: 'BTCUSDT Perpetual', type: 'Market', side: 'Buy', amount: '0.055 BTC'},
+      ];
 
+      openTab('Order History');
+      checkOrderHistoryRowsData(expectedOrders);
     });
   });
 });
